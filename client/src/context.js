@@ -7,7 +7,7 @@ const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
 
   const [ loading, setLoading ] = useState(true);
-  const [ searchTerm, setSearchTerm ] = useState('margarita');
+  const [ searchTerm, setSearchTerm ] = useState('');
   const [ cocktails, setCocktails ] = useState([]);
 
   const fetchDrinks = async () => {
@@ -24,15 +24,14 @@ const AppProvider = ({ children }) => {
             name: strDrink,
             img: strDrinkThumb,
             info: strAlcoholic,
-            glass: strGlass
+            glass: strGlass,
           }
-          setCocktails(newCocktails)
         })
+        setCocktails(newCocktails)
       } else {
         setCocktails([])
       }
       setLoading(false)
-      console.log(drinks)
 
     } catch (err) {
       console.log(err)
@@ -42,16 +41,16 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchDrinks();
-  }, [searchTerm])
+  }, [searchTerm]);
 
 
 
 
   return <AppContext.Provider
   value={
-    loading,
+    {loading,
     cocktails,
-    setSearchTerm
+    setSearchTerm}
   }
   >{children}</AppContext.Provider>
 }
